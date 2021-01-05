@@ -1,7 +1,5 @@
 language: python
-
 python: 3.8
-
 branches: master
 
 install:
@@ -10,14 +8,15 @@ install:
 
 script:
   - mike install-extras
-  - mike deploy ${TRAVIS_BRANCH#'release/'}
+  - echo $TRAVIS_PULL_REQUEST_BRANCH
+  - mike deploy $TRAVIS_PULL_REQUEST_BRANCH latest
 
 deploy:
   provider: pages
   skip_cleanup: true
   github_token: $GH_TOKEN
+  keep_history: true
   local_dir: site
   on:
-    branch: ${TRAVIS_BRANCH#'release/'}
-
+    branch: master
 
